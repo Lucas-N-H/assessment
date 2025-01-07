@@ -2,7 +2,7 @@
 
 const userNameInput    = document.getElementById('user-name');
 const assessmentButton = document.getElementById('assessment');
-const resultDivision   = document.getElementById('result-area');
+const resultDivided    = document.getElementById('result-area');
 const tweetDivision    = document.getElementById('tweet-area');
 
 
@@ -13,18 +13,29 @@ assessmentButton.onclick =() => {
     //上記は処理を終了するコマンド 通称ガード句
   }
     //console.log(username); 動作確認
-  //TODOツイートエリアの作成
-  resultDivision.innerText = '';//前回の診断結果の枠（result）を空にする
-  const header = document.createElement('h3');//h３タグをhtmlからではなくプログラミングの方から書くことによってそれぞれの名前に対して別の回答をできるようになる
-  header.innerText = '診断結果'//上記のh３タグの中に記入する内容の編集
-  resultDivision.appendChild (header); //apppendchild(解答をディスプレイに表示したい文章）
+  //headerDividedの作成
+  resultDivided.innerText = '';//前回の診断結果の枠（result）を空にする
+  const headerDivided = document.createElement('div');//divタグをhtmlからではなくプログラミングの方から書くことによってそれぞれの名前に対して別の回答をできるようになる
+  headerDivided.setAttribute('class', 'card-header');
+  headerDivided.innerText = '診断結果'//上記のh３タグの中に記入する内容の編集
+  resultDivided.appendChild (headerDivided); //apppendchild(解答をディスプレイに表示したい文章）
 
+  //bodyDividedの作成
+  const bodyDivided = document.createElement('div');
+  bodyDivided.setAttribute('class', 'card-body');
   const paragraph = document.createElement('p');
+  paragraph.setAttribute('class', 'card-text')
   const result = assessment(username);//assessment(username)　＝　検証(ユーザー名) 数字の配列に応じて結果(名：result)を取得
   paragraph.innerText = result;//診断結果をPタグの中に記入（この状態ではまだ画面には表示されない）
-  resultDivision.appendChild (paragraph);  //診断結果を（appendChildを通して）画面に表示
-  
-  //TODOツイートエリアの作成
+  bodyDivided.appendChild (paragraph);  //診断結果を（appendChildを通して）画面に表示
+  //resultDivided に card スタイルを追加
+  resultDivided.setAttribute('class', 'card');
+  resultDivided.setAttribute('stile', 'max-width: 700px');
+  //headerDivided　と　bodyDivided　を　resultDivided に差し込む
+  resultDivided.appendChild(headerDivided);
+  resultDivided.appendChild(bodyDivided);
+
+  //ツイートエリアの作成
   //下記のようにリンクを分析し構築し直しことをリバースエンジニアリングという
   tweetDivision.innerText = '';
   const anchor = document.createElement('a');
@@ -109,6 +120,5 @@ console.assert(
 
 userNameInput.onkeydown = event => {
   if (event.key === 'Enter');
-  assessmentButton.onclick();
-
+  assessmentButton.onclick();//診断するという名前で登録したボタンを押した時と同じ関数を実行
 }
